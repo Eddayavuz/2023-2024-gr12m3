@@ -48,16 +48,11 @@ namespace Playground
 
         public static void Main(String[] args)
         {
-            HandleFiles wr = new HandleFiles();
-            HandleFiles rd = new HandleFiles();
-            HandleFiles dr = new HandleFiles();
-            HandleFiles tx = new HandleFiles();
-            dr.CreateDir();
-            tx.CreateTxt();
-            wr.Write();
-            rd.Read();
-
-
+            HandleFiles hf = new HandleFiles();
+            hf.CreateDir();
+            hf.CreateTxt();
+            hf.Write();
+            hf.Read();
             Console.ReadKey();
         }
     }
