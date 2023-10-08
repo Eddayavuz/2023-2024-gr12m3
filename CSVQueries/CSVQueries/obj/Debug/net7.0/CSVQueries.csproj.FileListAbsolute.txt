@@ -1,0 +1,17 @@
+/Users/eda/Projects/CSVQueries/CSVQueries/bin/Debug/net7.0/CSVQueries
+/Users/eda/Projects/CSVQueries/CSVQueries/bin/Debug/net7.0/CSVQueries.deps.json
+/Users/eda/Projects/CSVQueries/CSVQueries/bin/Debug/net7.0/CSVQueries.runtimeconfig.json
+/Users/eda/Projects/CSVQueries/CSVQueries/bin/Debug/net7.0/CSVQueries.dll
+/Users/eda/Projects/CSVQueries/CSVQueries/bin/Debug/net7.0/CSVQueries.pdb
+/Users/eda/Projects/CSVQueries/CSVQueries/bin/Debug/net7.0/CsvHelper.dll
+/Users/eda/Projects/CSVQueries/CSVQueries/obj/Debug/net7.0/CSVQueries.csproj.AssemblyReference.cache
+/Users/eda/Projects/CSVQueries/CSVQueries/obj/Debug/net7.0/CSVQueries.GeneratedMSBuildEditorConfig.editorconfig
+/Users/eda/Projects/CSVQueries/CSVQueries/obj/Debug/net7.0/CSVQueries.AssemblyInfoInputs.cache
+/Users/eda/Projects/CSVQueries/CSVQueries/obj/Debug/net7.0/CSVQueries.AssemblyInfo.cs
+/Users/eda/Projects/CSVQueries/CSVQueries/obj/Debug/net7.0/CSVQueries.csproj.CoreCompileInputs.cache
+/Users/eda/Projects/CSVQueries/CSVQueries/obj/Debug/net7.0/CSVQueries.csproj.CopyComplete
+/Users/eda/Projects/CSVQueries/CSVQueries/obj/Debug/net7.0/CSVQueries.dll
+/Users/eda/Projects/CSVQueries/CSVQueries/obj/Debug/net7.0/refint/CSVQueries.dll
+/Users/eda/Projects/CSVQueries/CSVQueries/obj/Debug/net7.0/CSVQueries.pdb
+/Users/eda/Projects/CSVQueries/CSVQueries/obj/Debug/net7.0/CSVQueries.genruntimeconfig.cache
+/Users/eda/Projects/CSVQueries/CSVQueries/obj/Debug/net7.0/ref/CSVQueries.dll

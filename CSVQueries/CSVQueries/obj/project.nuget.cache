@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "07iz2DrLbOcNeeWKBXaric3c3AjaPnVSWCyYD/2ZoN1V+zgKJMUYPicMmF/AzRchK97KVxXz+cZXN9NF4FY8uA==",
+  "success": true,
+  "projectFilePath": "/Users/eda/Projects/CSVQueries/CSVQueries/CSVQueries.csproj",
+  "expectedPackageFiles": [
+    "/Users/eda/.nuget/packages/csvhelper/30.0.1/csvhelper.30.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}
