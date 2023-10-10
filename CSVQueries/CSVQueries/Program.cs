@@ -1,25 +1,25 @@
-﻿//Comma Separated Values (CSV) Demo
+//Comma Separated Values (CSV) Demo
 //1, Eda, Yavuz,542-251-7764
 
 // First let's do a little reading about the library we're about to use: https://joshclose.github.io/CsvHelper/getting-started/
 
 
-using CSVQueries; // import the CSVQueries namespace that's in PersonModel.cs
 using CsvHelper; // to be able to use this library, "dotnet add package CsvHelper" command
 
 using System.Globalization;
+using System.Formats.Asn1;
 
 // Declare paths for the input and output file
-string inputFile = "/Users/eda/Projects/CSVQueries/people-1000.csv";
-string outputFile = "/Users/eda/Projects/CSVQueries/filtered-people.csv";
+string inputFile = "C:\\Users\\e.yavuz\\source\\repos\\CSVHandle\\CSVHandle\\people-1000.csv";
+string outputFile = "C:\\Users\\e.yavuz\\source\\repos\\CSVHandle\\CSVHandle\\filtered-people.csv";
 
 // Declare a list using the PersonModel class
 List<PersonModel> outputRecords = new List<PersonModel>();
 
 // Declare Stream reader objects
 // There are two different ways of defining a StreamReader object.
-using StreamReader reader = new StreamReader(inputFile); // "using" is saying when you get to the end of the current context, close this object correctly.
-// using var reader = new StreamReader(inputFile); 
+
+using var reader = new StreamReader(inputFile); // "using" is saying when you get to the end of the current context, close this object correctly.
 
 
 // Declare csvreader object with the directory and cultureinfo parameters.
@@ -43,21 +43,21 @@ var records = csv.GetRecords<PersonModel>();
 foreach (var item in records)
 {
     // print the lines one by one on the console.
-    //Console.WriteLine(item.FirstName + " " + item.LastName);
+    Console.WriteLine(item.FirstName + " " + item.LastName);
 
 
-    // writing linq query for the names starts with A
+    //writing linq query for the names starts with A
 
-    /* var nameQuery = (from p in records
+    /* var nameQuery = (  from p in records
                        where p.FirstName.StartsWith('A')
                        select p);
     foreach (var person in nameQuery)
     {
         outputRecords.Add(person);
-    } */
+    } 
 
-    // linq query for female people older than 29.
-    /* var ageAndSexQuery = (from p in records
+    // linq query for female people older than 29. 
+    var ageAndSexQuery = (from p in records
                           where p.DateOfBirth.Year > 1993 && p.Sex.Equals("Female")
                           select p ) ;
     
@@ -67,17 +67,16 @@ foreach (var item in records)
         outputRecords.Add(person);
     } */
 
-    /*
+
     var occupationQuery = (from p in records
                           where p.JobTitle.Equals("barber")
                           select p);
 
+    Console.WriteLine(occupationQuery);
     foreach (var person in occupationQuery)
     {
         outputRecords.Add(person);
-    } */
-
-
+    } 
 }
 
 
@@ -88,3 +87,37 @@ using var csvOut = new CsvWriter(writer, CultureInfo.InvariantCulture);
 
 // pass the items into the csvout file.
 csvOut.WriteRecords(outputRecords);
+
+
+// PERSON MODEL
+
+public class PersonModel
+{
+    // Index property
+public int Index { get; set; }
+
+// User Id property
+public string UserId { get; set; }
+
+// First Name property
+public string FirstName { get; set; }
+
+// Last Name property
+public string LastName { get; set; }
+
+// Sex property
+public string Sex { get; set; }
+
+// Email property
+public string Email { get; set; }
+
+// Phone property
+public string Phone { get; set; }
+
+// Date of Birth property
+public DateTime DateOfBirth { get; set; }
+
+// Job Title property
+public string JobTitle { get; set; }
+
+}
