@@ -1,4 +1,4 @@
-CREATE DATABASE OnlineShopping
+-- AFTER CREATING THE DB (OnlineShopping) MANUALLY OB THE OBJECT EXPLORER RIGHT CLICK ON THE DB AND CLICK NEW QUERY --
     
 -- Create the Customer table
 CREATE TABLE Customers (
