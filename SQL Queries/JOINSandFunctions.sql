@@ -2,9 +2,6 @@
 ALTER TABLE Orders
 ADD FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID);
 
-ALTER TABLE Orders
-ADD FOREIGN KEY (ShipperID) REFERENCES Shippers(ShipperID);
-
 --INSERT, UPDATE and DELETE Examples
 
 INSERT INTO Shippers(ShipperID, ShipperName, Phone)
