@@ -36,21 +36,36 @@ INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
 -- RIGHT (OUTER) JOIN: Returns all records from the right table, and the matched records from the left table
 -- FULL (OUTER) JOIN: Returns all records when there is a match in either left or right table
 
--- INNER JOIN EXAMPLE with COUNT and GROUP BY
+-- INNER JOIN: 
+-- Retrieve the names of customers with the count of orders they have placed (only for the matching value)
 SELECT Customers.CustomerName, COUNT(Orders.OrderID) AS OrderCount
 FROM Customers
 INNER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
 GROUP BY Customers.CustomerName
 
--- MULTIPLE TABLE JOINS
-SELECT O.OrderID, C.CustomerName, S.ShipperName
-FROM Orders O
-INNER JOIN Shippers S ON S.ShipperID = O.ShipperID
-INNER JOIN Customers C ON O.CustomerID = C.CustomerID
-GROUP BY C.CustomerName, S.ShipperName, O.OrderID
+-- Can someone check how many customers do we have in total?
+
+-- LEFT JOIN: 
+-- Retrieve the names of all the customers from Customers(left table) 
+-- and the order count from the Orders (right table). Display 0 or null when the customer without any orders.
+
+SELECT Customers.CustomerName, COUNT(Orders.OrderID) AS OrderCount
+FROM Customers
+LEFT JOIN Orders ON  Customers.CustomerID = Orders.CustomerID 
+GROUP BY Customers.CustomerName
+
+-- RIGHT JOIN:
+-- Get a report of all orders with their Shipper information. 
+-- Include ShipperName, Phone, OrderID and OrderDate
+-- If there is a shipper that is not assigned to an order, still show the shipper details.
+
+SELECT Shippers.ShipperName, Shippers.Phone, Orders.OrderID, Orders.OrderDate
+From Orders
+RIGHT JOIN Shippers ON Orders.ShipperID = Shippers.ShipperID
 
 
--- CREATE TABLE WITH SELECT INTO Structure
+
+-- CREATE A NEW TABLE USING TWO DIFFERENT TABLES
 
 SELECT 
 Shippers.ShipperName,
