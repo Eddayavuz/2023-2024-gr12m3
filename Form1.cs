@@ -1,24 +1,4 @@
-using System.Net.Mail;
-using System.Data.SqlClient;
-using Microsoft.VisualBasic.Logging;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
-
-namespace WinFormsDemo
-{
-    public partial class rgstr : Form
-    {
-        /*
-        SqlCommand cmd;
-        SqlConnection cn;
-        SqlDataReader dr;
-        */
-        public rgstr()
-        {
-            InitializeComponent();
-        }
+using System.Text.RegularExpressions; // import regex library
 
         private void uNameTxt_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -39,59 +19,35 @@ namespace WinFormsDemo
                 passwordTxt.SelectAll();
                 e.Cancel = true;
             }
-
         }
 
         private void passwordTxt_TextChanged(object sender, EventArgs e)
         {
-            length.Show();
-            capital.Show();
+            length.Show(); // label for the password lenght requirement
+            capital.Show(); // label for the uppercase letter requirement
             lowercase.Show();
             number.Show();
 
-            if (passwordTxt.Text.Length > 8)
-                length.ForeColor = Color.Green;
-            else
-                length.ForeColor = Color.Red;
-
-            if (passwordTxt.Text.Any(char.IsUpper))
-                capital.ForeColor = Color.Green;
+            if (passwordTxt.Text.Any(char.IsUpper)) //check if a string includes any uppercase letter
+                capital.ForeColor = Color.Green; //change the color property of capital label
             else
                 capital.ForeColor = Color.Red;
-
-            if (passwordTxt.Text.Any(char.IsLower))
-                lowercase.ForeColor = Color.Green;
-            else
-                lowercase.ForeColor = Color.Red;
-
-            if (passwordTxt.Text.Any(char.IsDigit))
-                number.ForeColor = Color.Green;
-            else
-                number.ForeColor = Color.Red;
         }
 
         private void emailTxt_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (emailTxt.Text != string.Empty)
-            {
-                if (!IsValidEmail(emailTxt.Text))
-                {
-                    MessageBox.Show("email not valid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    emailTxt.SelectAll();
-                    e.Cancel = true;
-                }
-            }
+        
         }
 
         public static bool IsValidEmail(string email)
         {
-            string emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+            string emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"; // REGEX pattern for acceptable email.
 
-            if (string.IsNullOrEmpty(email))
+            if (string.IsNullOrEmpty(email)) // return false if email is empty.
                 return false;
 
-            Regex regex = new Regex(emailPattern);
-            return regex.IsMatch(email);
+            Regex regex = new Regex(emailPattern); // create an instance of Regex class.
+            return regex.IsMatch(email); // call ismatch method and return boolean value.
         }
 
     }
