@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WinFormsDemo": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\e.yavuz\\Desktop"
+    }
+  }
+}
