@@ -46,7 +46,7 @@ namespace WinFormsDemo
                 cmd.Parameters.AddWithValue("@Username", username.Text);
                 cmd.Parameters.AddWithValue("@Password", password.Text);
 
-                int count = Convert.ToInt32(cmd.ExecuteScalar());
+                int count = Convert.ToInt32(cmd.ExecuteScalar()); // Executes the query, and returns the first column of the first row in the result set returned by the query. Additional columns or rows are ignored.
 
                 if (count == 1)
                 {
