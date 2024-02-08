@@ -1,27 +1,25 @@
-using System.Net.Mail;
+using System;
 using System.Data.SqlClient;
-using Microsoft.VisualBasic.Logging;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.ComponentModel.DataAnnotations;
+using System.Drawing;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 
 namespace WinFormsDemo
 {
     public partial class rgstr : Form
     {
+        private SqlCommand cmd;
+        private SqlConnection cn;
+        private SqlDataReader dr;
 
-        SqlCommand cmd;
-        SqlConnection cn;
-        SqlDataReader dr;
-       
         public rgstr()
         {
             InitializeComponent();
         }
+
+        // Validation for username length
         private void uNameTxt_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
-
             if (username.Text.Length <= 5)
             {
                 MessageBox.Show("Username should be at least 5 characters", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -30,6 +28,7 @@ namespace WinFormsDemo
             }
         }
 
+        // Validation for password complexity
         private void passwordTxt_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (!(password.Text.Length > 8 && password.Text.Any(char.IsUpper) && password.Text.Any(char.IsLower) && password.Text.Any(char.IsDigit)))
@@ -38,9 +37,9 @@ namespace WinFormsDemo
                 password.SelectAll();
                 e.Cancel = true;
             }
-
         }
-
+        
+        // Validating each password criteria as the user types.
         private void passwordTxt_TextChanged(object sender, EventArgs e)
         {
             length.Show();
@@ -69,81 +68,86 @@ namespace WinFormsDemo
                 number.ForeColor = Color.Red;
         }
 
+        // Validation for email format
         private void emailTxt_Validating(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (emailTxt.Text != string.Empty)
+            if (!IsValidEmail(emailTxt.Text))
             {
-                if (!IsValidEmail(emailTxt.Text))
-                {
-                    MessageBox.Show("email not valid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    emailTxt.SelectAll();
-                    e.Cancel = true;
-                }
+                MessageBox.Show("Email not valid.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                emailTxt.SelectAll();
+                e.Cancel = true;
             }
         }
 
+        // Email validation helper method
         public static bool IsValidEmail(string email)
         {
             string emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
-
-            if (string.IsNullOrEmpty(email))
-                return false;
-
-            Regex regex = new Regex(emailPattern);
-            return regex.IsMatch(email);
+            return !string.IsNullOrEmpty(email) && Regex.IsMatch(email, emailPattern);
         }
 
+        // Button click event for user registration
         private void button1_Click(object sender, EventArgs e)
         {
-            cn = new SqlConnection(@"Data Source=LAB109PC23\SQLEXPRESS; Initial Catalog=userRecords; Integrated Security=True;");
-            cn.Open();
-
-            if (password.Text != string.Empty || rePassword.Text != string.Empty)
+            // Connecting to the database
+            using (cn = new SqlConnection(@"Data Source=LAB109PC23\SQLEXPRESS; Initial Catalog=userRecords; Integrated Security=True;"))
             {
-                if (password.Text == rePassword.Text)
+                cn.Open();
+
+                // Checking if passwords match
+                if (!string.IsNullOrEmpty(password.Text) && !string.IsNullOrEmpty(rePassword.Text))
                 {
-                    SqlCommand cmd = new SqlCommand("select * from userInfo where username='" + username.Text + "'", cn);
-                    dr = cmd.ExecuteReader();
-                    if (dr.Read())
+                    if (password.Text == rePassword.Text)
                     {
-                        dr.Close();
-                        MessageBox.Show("Username Already exist please try another ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        // Checking if the username already exists
+                        using (cmd = new SqlCommand("Write SQL query to select the username from the 'userInfo' table where it matches the value entered in a textbox. Use a parameterized query with the placeholder @username.", cn))
+                        {
+                            cmd.Parameters.AddWithValue("@username", username.Text);
+                            using (dr = cmd.ExecuteReader())
+                            {
+                                if (dr.Read())
+                                {
+                                    MessageBox.Show("Username already exists, please try another", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                }
+                                else
+                                {
+                                    dr.Close();
+
+                                    // Inserting user information into the database
+                                    using (cmd = new SqlCommand("write an insert into command to add all the fields from your sign up form to the table. If necessary, add new columns to your table.", cn))
+                                    {
+                                        cmd.Parameters.AddWithValue("@username", username.Text);
+                                        cmd.Parameters.AddWithValue("@email", emailTxt.Text);
+                                        cmd.Parameters.AddWithValue("@password", password.Text);
+                                        cmd.ExecuteNonQuery();
+
+                                        MessageBox.Show("Your Account is created. Please login now.", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        Hide();
+                                        Form2 login = new Form2();
+                                        login.Show();
+                                    }
+                                }
+                            }
+                        }
                     }
                     else
                     {
-                        dr.Close();
-                        cmd = new SqlCommand("insert into userInfo values(@username,@email, @password)", cn);
-                        cmd.Parameters.AddWithValue("username", username.Text);
-                        cmd.Parameters.AddWithValue("email", emailTxt.Text);
-                        cmd.Parameters.AddWithValue("password", password.Text);
-                        cmd.ExecuteNonQuery();
-                     
-                        MessageBox.Show("Your Account is created. Please login now.", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.Hide();
-                        Form2 login = new Form2();
-                        login.Show();
+                        MessageBox.Show("Please enter both passwords the same", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Please enter both password same ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Please enter a value in all fields.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else
-            {
-                MessageBox.Show("Please enter value in all field.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
         }
 
+        // Click event for navigating to login form
         private void label3_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
             Form2 form2 = new Form2();
             form2.ShowDialog();
         }
     }
-
 }
-
-
