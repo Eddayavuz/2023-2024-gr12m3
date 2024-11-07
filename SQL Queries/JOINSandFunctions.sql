@@ -1,3 +1,19 @@
+Alter table ordermanagement.orders
+Modify OrderDate date;
+
+ALTER TABLE customer
+ADD primary key (CustomerID);
+
+ALTER TABLE orders 
+ADD FOREIGN KEY (CustomerID) REFERENCES customer(CustomerID);
+
+
+Alter table shippers
+add primary key (ShipperID);
+
+ALTER TABLE orders 
+ADD FOREIGN KEY (ShipperID) REFERENCES shippers(ShipperID);
+
 -- A JOIN clause is used to combine rows from two or more tables, based on a related column between them.
 -- We know that Orders and Customers tables are related.
 -- The relationship between the two tables is the "CustomerID" column.
